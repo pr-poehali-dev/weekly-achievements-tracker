@@ -34,9 +34,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
           <div className="text-center animate-fade-in">
-            <h1 className="text-5xl sm:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent">
-              WEEKLY WINS
-            </h1>
+            <h1 className="text-5xl sm:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent"></h1>
             <p className="text-xl sm:text-2xl mb-8 text-gray-100 max-w-3xl mx-auto">
               Дерзко достигай целей каждый день. Получай крутые видео за успехи. 
               <span className="font-semibold text-yellow-300"> Будь лучшей версией себя!</span>
