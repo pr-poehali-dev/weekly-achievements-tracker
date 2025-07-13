@@ -3,12 +3,17 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
 
 const Index = () => {
   const [checkedDays, setCheckedDays] = useState<boolean[]>(new Array(7).fill(false));
   const [currentWeek, setCurrentWeek] = useState(1);
   const [totalRewards, setTotalRewards] = useState(3);
+  const [goalTitle, setGoalTitle] = useState('');
+  const [goalDescription, setGoalDescription] = useState('');
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   const days = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
   const completedDays = checkedDays.filter(Boolean).length;
@@ -164,10 +169,75 @@ const Index = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-6 space-y-3">
-                <Button className="w-full bg-energetic hover:bg-energetic/90 hover:scale-105 transition-all duration-200">
-                  <Icon name="Plus" className="mr-2" />
-                  Добавить цель
-                </Button>
+                <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+                  <DialogTrigger asChild>
+                    <Button className="w-full bg-energetic hover:bg-energetic/90 hover:scale-105 transition-all duration-200">
+                      <Icon name="Plus" className="mr-2" />
+                      Добавить цель
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-md">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center text-xl text-energetic">
+                        <Icon name="Target" className="mr-2" />
+                        Создать новую цель
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">
+                          Название цели
+                        </label>
+                        <Input
+                          placeholder="Например: Заниматься спортом"
+                          value={goalTitle}
+                          onChange={(e) => setGoalTitle(e.target.value)}
+                          className="w-full"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-sm font-medium text-gray-700 mb-2 block">
+                          Описание (необязательно)
+                        </label>
+                        <Input
+                          placeholder="Подробности о вашей цели..."
+                          value={goalDescription}
+                          onChange={(e) => setGoalDescription(e.target.value)}
+                          className="w-full"
+                        />
+                      </div>
+                      <div className="flex space-x-2 pt-4">
+                        <Button
+                          onClick={() => {
+                            if (goalTitle.trim()) {
+                              // Здесь можно добавить логику сохранения цели
+                              console.log('Новая цель:', { title: goalTitle, description: goalDescription });
+                              setGoalTitle('');
+                              setGoalDescription('');
+                              setIsDialogOpen(false);
+                            }
+                          }}
+                          className="flex-1 bg-gradient-to-r from-energetic to-teal text-white hover:scale-105 transition-all duration-200"
+                          disabled={!goalTitle.trim()}
+                        >
+                          <Icon name="Check" className="mr-2" size={16} />
+                          Создать
+                        </Button>
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setGoalTitle('');
+                            setGoalDescription('');
+                            setIsDialogOpen(false);
+                          }}
+                          className="flex-1"
+                        >
+                          Отмена
+                        </Button>
+                      </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
                 <Button variant="outline" className="w-full border-teal text-teal hover:bg-teal/5 hover:scale-105 transition-all duration-200">
                   <Icon name="BarChart3" className="mr-2" />
                   Мой прогресс
